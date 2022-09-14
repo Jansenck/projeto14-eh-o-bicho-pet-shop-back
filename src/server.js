@@ -12,7 +12,7 @@ app.use(signUpRouter);
 
 app.get("/teste", (req, res) => {
   return res.send(
-    "aff..."
+    "Hello World!"
   );
 });
 
