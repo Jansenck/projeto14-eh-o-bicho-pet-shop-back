@@ -1,6 +1,7 @@
 import db from "../database/db.js";
 import bcrypt from "bcrypt"
-import { schemaSignUp } from "../schemas/schemas.js"
+import { StatusCodes } from "http-status-codes"
+import { schemaSignUp } from "../schemas/auth.schema.js"
 
 async function validationSignUp (req, res, next) {
 
@@ -10,7 +11,7 @@ async function validationSignUp (req, res, next) {
 
     if(error) {
         const errors = error.details.map(value => value.message)
-        return res.status(STATUS.UNPROCESSABLE).send(errors)
+        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(errors)
     }
 
     try {
@@ -18,12 +19,12 @@ async function validationSignUp (req, res, next) {
         const userCpf = await db.collection("users").findOne({cpf})
 
         if (user || userCpf) {
-            return res.sendStatus(STATUS.CONFLITC)
+            return res.sendStatus(StatusCodes.CONFLICT)
         }
 
     } catch (error) {
         console.error(error)
-        return res.sendStatus(STATUS.SERVER_ERROR)
+        return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 
     next()
