@@ -9,7 +9,7 @@ app.use(json());
 
 app.get("/teste", (req, res) => {
   return res.send(
-    "aff..."
+    "Hello World!"
   );
 });
 
