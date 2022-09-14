@@ -9,4 +9,9 @@ const schemaSignUp = joi.object({
     adress: joi.string().empty().trim().required()
 })
 
-export { schemaSignUp }
+const schemaSignIn = joi.object({
+    email: joi.string().email().empty().trim().required(),
+    password: joi.string().alphanum().required().min(4).empty().required()
+})
+
+export { schemaSignUp, schemaSignIn }

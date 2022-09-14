@@ -34,4 +34,31 @@ async function createUser (req, res) {
     }
 }
 
-export { createUser }
+async function checkUser (req, res) {
+
+    const user = res.locals.user
+
+    try {
+        
+        const checkSession = await db.collection("sessions").findOne({userId: user._id})
+
+        if(checkSession) {
+            return res.status(StatusCodes.OK).send({...user, token: checkSession.token})
+        }
+
+        const token = uuid()
+
+        await db.collection("sessions").insertOne({userId: user._id,token})
+        res.status(StatusCodes.OK).send({...user, token})
+
+    } catch (error) {
+        console.error(error)
+        res.sendStatus(500)
+    }
+
+}
+
+export {
+    createUser,
+    checkUser
+}
