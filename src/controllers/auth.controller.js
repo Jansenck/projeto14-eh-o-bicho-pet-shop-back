@@ -37,7 +37,7 @@ async function createUser (req, res) {
 async function checkUser (req, res) {
 
     const user = res.locals.user
-
+    delete user.password
     try {
         
         const checkSession = await db.collection("sessions").findOne({userId: user._id})

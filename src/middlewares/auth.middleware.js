@@ -48,7 +48,7 @@ async function validationSignIn (req, res, next) {
         }
 
         const checkPassword = bcrypt.compareSync(password, user.password)
-        delete user.password
+        
 
         if (!checkPassword) {
             return res.sendStatus(StatusCodes.NOT_FOUND)
