@@ -19,4 +19,43 @@ async function SingleProductPage(req, res) {
   }
 }
 
-export { SingleProductPage };
+async function AddToCart(req, res) {
+  const { title, price } = req.body;
+  const session = res.locals.session;
+
+  try {
+    const user = await db.collection("users").findOne({ _id: session.userId });
+
+    if (user) {
+      const { insertedId } = await db.collection("selectedproducts").insertOne({
+        userId: session.userId,
+        title,
+        price,
+      });
+      res.status(StatusCodes.OK).send(req.body);
+    } else {
+      res.sendStatus(StatusCodes.UNAUTHORIZED);
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
+async function getCart(req, res) {
+  const session = res.locals.session;
+
+  try {
+    const productsInCart = await db
+      .collection("selectedproducts")
+      .find({ userId: session.userId })
+      .toArray();
+
+    res.send(productsInCart);
+  } catch (err) {
+    console.log(err.message);
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export { SingleProductPage, AddToCart, getCart };
