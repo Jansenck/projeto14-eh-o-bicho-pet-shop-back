@@ -6,11 +6,11 @@ import { schemaSignUp, schemaSignIn } from "../schemas/auth.schema.js"
 async function validationSignUp (req, res, next) {
 
     const {email, cpf} = req.body
-
     const {error} = schemaSignUp.validate(req.body, {abortEarly: false})
 
     if(error) {
         const errors = error.details.map(value => value.message)
+        console.log(errors)
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(errors)
     }
 

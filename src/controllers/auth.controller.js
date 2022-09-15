@@ -11,7 +11,7 @@ async function createUser (req, res) {
         cpf, 
         password, 
         confirmPassword,
-        adress
+        address
     } = req.body
 
     const encryptedPassword = bcrypt.hashSync(password, 10)
@@ -23,7 +23,7 @@ async function createUser (req, res) {
             email: email.trim(),
             password: encryptedPassword,
             cpf: cpf.trim(),
-            adress: adress.trim()
+            address: address.trim()
         })
 
         res.sendStatus(StatusCodes.CREATED)
@@ -38,6 +38,7 @@ async function checkUser (req, res) {
 
     const user = res.locals.user
     delete user.password
+   
     try {
         
         const checkSession = await db.collection("sessions").findOne({userId: user._id})
