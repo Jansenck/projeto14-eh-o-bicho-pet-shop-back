@@ -1,7 +1,7 @@
 import db from "../database/db.js";
 import { StatusCodes } from "http-status-codes";
 
-async function isUser(req, res, next) {
+async function IsLogged(req, res, next) {
   const token = req.headers.authorization?.replace("Bearer ", "");
 
   try {
@@ -9,6 +9,7 @@ async function isUser(req, res, next) {
     if (!session) {
       return res.sendStatus(StatusCodes.UNAUTHORIZED);
     }
+
     res.locals.session = session;
   } catch (error) {
     console.error(error);
@@ -18,4 +19,4 @@ async function isUser(req, res, next) {
   next();
 }
 
-export default isUser;
+export default IsLogged;
