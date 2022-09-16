@@ -43,7 +43,7 @@ async function AddToCart(req, res) {
       .findOne({ _id: new ObjectId(productId) });
 
     if (user && product) {
-      const { insertedId } = await db.collection("selectedproducts").insertOne({
+      const { insertedId } = await db.collection("products_cart").insertOne({
         userId: session.userId,
         productId,
         title: product.title,

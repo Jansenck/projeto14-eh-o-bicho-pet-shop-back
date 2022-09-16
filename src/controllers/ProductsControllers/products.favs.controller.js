@@ -14,7 +14,7 @@ async function AddToFavs(req, res) {
       .findOne({ _id: new ObjectId(productId) });
 
     if (user && product) {
-      const { insertedId } = await db.collection("favproducts").insertOne({
+      const { insertedId } = await db.collection("favorites").insertOne({
         userId: session.userId,
         productId,
         title: product.title,
