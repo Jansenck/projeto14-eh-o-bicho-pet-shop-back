@@ -25,9 +25,12 @@ async function createUser(req, res) {
       address: address.trim()
     });
 
+    res.sendStatus(StatusCodes.CREATED);
+
     } catch (error) {
     console.error(error);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+    
   }
 }
 
