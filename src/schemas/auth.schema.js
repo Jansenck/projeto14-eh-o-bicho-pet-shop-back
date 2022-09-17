@@ -1,4 +1,4 @@
-import joi from "joi"
+import joi from "joi";
 
 const schemaSignUp = joi.object({
     name: joi.string().max(15).empty().trim().required(),
@@ -10,8 +10,8 @@ const schemaSignUp = joi.object({
 })
 
 const schemaSignIn = joi.object({
-    email: joi.string().email().empty().trim().required(),
-    password: joi.string().alphanum().required().min(4).empty().required()
-})
+  email: joi.string().email().empty().trim().required(),
+  password: joi.string().alphanum().required().min(4).empty().required(),
+});
 
-export { schemaSignUp, schemaSignIn }
+export { schemaSignUp, schemaSignIn };

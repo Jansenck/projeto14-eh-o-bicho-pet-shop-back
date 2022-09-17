@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import db from "../database/db.js";
-import { StatusCodes } from "http-status-codes"
+import { StatusCodes } from "http-status-codes";
 
-async function createUser (req, res) {
+async function createUser(req, res) {
 
     const {
         name, 
@@ -11,27 +11,24 @@ async function createUser (req, res) {
         cpf, 
         password, 
         confirmPassword,
-        address
+        adress
     } = req.body
 
-    const encryptedPassword = bcrypt.hashSync(password, 10)
+  const encryptedPassword = bcrypt.hashSync(password, 10);
 
-    try {
-        
-        await db.collection("users").insertOne({
-            name: name.trim(),
-            email: email.trim(),
-            password: encryptedPassword,
-            cpf: cpf.trim(),
-            address: address.trim()
-        })
-
-        res.sendStatus(StatusCodes.CREATED)
+  try {
+    await db.collection("users").insertOne({
+      name: name.trim(),
+      email: email.trim(),
+      password: encryptedPassword,
+      cpf: cpf.trim(),
+      address: address.trim()
+    });
 
     } catch (error) {
-        console.error(error)
-        res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
-    }
+    console.error(error);
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 }
 
 async function checkUser (req, res) {
@@ -47,19 +44,14 @@ async function checkUser (req, res) {
             return res.status(StatusCodes.OK).send({...user, token: checkSession.token})
         }
 
-        const token = uuid()
+    const token = uuid();
 
-        await db.collection("sessions").insertOne({userId: user._id,token})
-        res.status(StatusCodes.OK).send({...user, token})
-
-    } catch (error) {
-        console.error(error)
-        res.sendStatus(500)
-    }
-
+    await db.collection("sessions").insertOne({ userId: user._id, token });
+    res.status(StatusCodes.OK).send({ ...user, token });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
 }
 
-export {
-    createUser,
-    checkUser
-}
+export { createUser, checkUser };

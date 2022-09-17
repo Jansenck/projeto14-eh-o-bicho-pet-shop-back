@@ -1,7 +1,10 @@
 import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import authRouter from  "./routes/auth.router.js";
+import authRouter from "./routes/auth.router.js";
+import adminRouter from "./routes/admin.router.js";
+import productsRouter from "./routes/products.router.js";
+import favoriteRouter from "./routes/favorites.router.js";
 dotenv.config();
 
 const app = express();
@@ -9,13 +12,9 @@ const app = express();
 app.use(cors());
 app.use(json());
 app.use(authRouter);
-
-
-app.get("/teste", (req, res) => {
-  return res.send(
-    "Hello World!"
-  );
-});
+app.use(adminRouter);
+app.use(productsRouter);
+app.use(favoriteRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port " + process.env.PORT);
