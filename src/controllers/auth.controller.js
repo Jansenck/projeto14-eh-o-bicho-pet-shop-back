@@ -6,8 +6,6 @@ import { StatusCodes } from "http-status-codes";
 async function createUser(req, res) {
   const { name, email, cpf, password, confirmPassword, address } = req.body;
 
-  console.log(req.body.address)
-
   const encryptedPassword = bcrypt.hashSync(password, 10);
 
   try {
