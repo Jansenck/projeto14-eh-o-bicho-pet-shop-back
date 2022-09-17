@@ -7,7 +7,7 @@ const schemaSignUp = joi.object({
     confirmPassword: joi.ref("password"),
     cpf: joi.number().empty().required(),
     address: joi.string().empty().trim().required()
-});
+})
 
 const schemaSignIn = joi.object({
   email: joi.string().email().empty().trim().required(),
