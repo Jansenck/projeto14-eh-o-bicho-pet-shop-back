@@ -11,7 +11,7 @@ async function createUser(req, res) {
         cpf, 
         password, 
         confirmPassword,
-        adress
+        address
     } = req.body
 
   const encryptedPassword = bcrypt.hashSync(password, 10);
