@@ -30,6 +30,7 @@ async function createUser(req, res) {
     } catch (error) {
     console.error(error);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+    
   }
 }
 
