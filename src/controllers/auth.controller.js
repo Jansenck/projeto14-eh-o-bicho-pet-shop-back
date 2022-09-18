@@ -57,4 +57,19 @@ async function checkUser (req, res) {
   }
 }
 
-export { createUser, checkUser };
+async function deleteSession (req, res) {
+
+  const {token} = res.locals.session
+
+  try {
+
+    await db.collection("sessions").deleteOne({token})
+    res.sendStatus(202)
+
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+}
+
+export { createUser, checkUser, deleteSession };
