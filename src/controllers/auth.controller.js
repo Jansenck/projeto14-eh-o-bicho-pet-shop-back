@@ -4,7 +4,6 @@ import db from "../database/db.js";
 import { StatusCodes } from "http-status-codes";
 
 async function createUser(req, res) {
-  const { name, email, cpf, password, confirmPassword, address } = req.body;
 
   const encryptedPassword = bcrypt.hashSync(password, 10);
 
@@ -18,25 +17,26 @@ async function createUser(req, res) {
     });
 
     res.sendStatus(StatusCodes.CREATED);
-  } catch (error) {
+
+    } catch (error) {
     console.error(error);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+    
   }
 }
 
-async function checkUser(req, res) {
-  const user = res.locals.user;
+async function checkUser (req, res) {
 
-  try {
-    const checkSession = await db
-      .collection("sessions")
-      .findOne({ userId: user._id });
+    const user = res.locals.user
+    delete user.password
+   
+    try {
+        
+        const checkSession = await db.collection("sessions").findOne({userId: user._id})
 
-    if (checkSession) {
-      return res
-        .status(StatusCodes.OK)
-        .send({ ...user, token: checkSession.token });
-    }
+        if(checkSession) {
+            return res.status(StatusCodes.OK).send({...user, token: checkSession.token})
+        }
 
     const token = uuid();
 

@@ -6,11 +6,11 @@ import { schemaSignUp, schemaSignIn } from "../schemas/auth.schema.js"
 async function validationSignUp (req, res, next) {
 
     const {email, cpf} = req.body
-
     const {error} = schemaSignUp.validate(req.body, {abortEarly: false})
 
     if(error) {
         const errors = error.details.map(value => value.message)
+        console.log(errors)
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send(errors)
     }
 
@@ -48,7 +48,7 @@ async function validationSignIn (req, res, next) {
         }
 
         const checkPassword = bcrypt.compareSync(password, user.password)
-        delete user.password
+        
 
         if (!checkPassword) {
             return res.sendStatus(StatusCodes.NOT_FOUND)
@@ -63,5 +63,5 @@ async function validationSignIn (req, res, next) {
 
     next()
 }
-//1
+
 export {validationSignUp, validationSignIn}
