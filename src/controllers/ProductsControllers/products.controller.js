@@ -3,9 +3,29 @@ import { StatusCodes } from "http-status-codes";
 import { ObjectId } from "mongodb";
 
 async function GetProducts(req, res) {
+  const { category } = req.query;
+
   try {
-    const allProducts = await db.collection("products").find().toArray();
-    res.status(StatusCodes.OK).send(allProducts);
+    if (category) {
+      const dogProducts = await db
+        .collection("products")
+        .find({ category })
+        .toArray();
+      res.status(StatusCodes.OK).send(dogProducts);
+      const catProducts = await db
+        .collection("products")
+        .find({ category })
+        .toArray();
+      res.status(StatusCodes.OK).send(catProducts);
+      const fishProducts = await db
+        .collection("products")
+        .find({ category })
+        .toArray();
+      res.status(StatusCodes.OK).send(fishProducts);
+    } else {
+      const allProducts = await db.collection("products").find().toArray();
+      res.status(StatusCodes.OK).send(allProducts);
+    }
   } catch (err) {
     console.log(err.message);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -48,6 +68,7 @@ async function AddToCart(req, res) {
         productId,
         title: product.title,
         price: product.price,
+        image: product.image,
       });
       res.sendStatus(StatusCodes.OK);
     } else if (!user) {
