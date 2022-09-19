@@ -10,5 +10,4 @@ try {
   console.error(error.message);
 }
 const db = mongoClient.db(process.env.DATABASE);
-
 export default db;
