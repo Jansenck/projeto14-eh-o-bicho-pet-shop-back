@@ -20,7 +20,6 @@ app.use(json());
 app.use(authRouter);
 app.use(adminRouter);
 app.use(productsRouter);
-7;
 /* TODO: criar o cart router */
 //app.use(cartRouter);
 app.use(favoriteRouter);
