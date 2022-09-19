@@ -13,16 +13,6 @@ async function GetProducts(req, res) {
         .toArray();
       res.status(StatusCodes.OK).send(Products);
       return;
-      // const catProducts = await db
-      //   .collection("products")
-      //   .find({ category })
-      //   .toArray();
-      // res.status(StatusCodes.OK).send(catProducts);
-      // const fishProducts = await db
-      //   .collection("products")
-      //   .find({ category })
-      //   .toArray();
-      // res.status(StatusCodes.OK).send(fishProducts);
     } else {
       const allProducts = await db.collection("products").find().toArray();
       res.status(StatusCodes.OK).send(allProducts);
