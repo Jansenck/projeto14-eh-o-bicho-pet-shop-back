@@ -7,21 +7,12 @@ async function GetProducts(req, res) {
 
   try {
     if (category) {
-      const dogProducts = await db
+      const Products = await db
         .collection("products")
         .find({ category })
         .toArray();
-      res.status(StatusCodes.OK).send(dogProducts);
-      const catProducts = await db
-        .collection("products")
-        .find({ category })
-        .toArray();
-      res.status(StatusCodes.OK).send(catProducts);
-      const fishProducts = await db
-        .collection("products")
-        .find({ category })
-        .toArray();
-      res.status(StatusCodes.OK).send(fishProducts);
+      res.status(StatusCodes.OK).send(Products);
+      return;
     } else {
       const allProducts = await db.collection("products").find().toArray();
       res.status(StatusCodes.OK).send(allProducts);
