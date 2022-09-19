@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.get("/favorites", listFavoriteProducts);
-router.delete("/favorites", deleteFavoriteProduct);
+router.get("/favorites/:productId", listFavoriteProducts);
+router.delete("/favorites/:productId", deleteFavoriteProduct);
 
 export default router;
