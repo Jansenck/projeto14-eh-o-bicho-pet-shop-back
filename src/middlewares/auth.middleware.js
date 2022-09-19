@@ -5,6 +5,7 @@ import { schemaSignUp, schemaSignIn } from "../schemas/auth.schema.js"
 
 async function validationSignUp (req, res, next) {
 
+
     const {email, cpf} = req.body
     const {error} = schemaSignUp.validate(req.body, {abortEarly: false})
 
