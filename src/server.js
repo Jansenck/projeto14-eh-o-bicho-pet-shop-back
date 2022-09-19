@@ -8,12 +8,19 @@ import favoriteRouter from "./routes/favorites.router.js";
 dotenv.config();
 
 const app = express();
-
 app.use(cors());
+
+app.enableCors({
+  origin: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true,
+});
+
 app.use(json());
 app.use(authRouter);
 app.use(adminRouter);
-app.use(productsRouter);7
+app.use(productsRouter);
+7;
 /* TODO: criar o cart router */
 //app.use(cartRouter);
 app.use(favoriteRouter);
