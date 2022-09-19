@@ -8,13 +8,20 @@ import favoriteRouter from "./routes/favorites.router.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
-app.enableCors({
-  origin: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  credentials: true,
-});
+app.use(
+  cors({
+    origin: "https://ehobicho.herokuapp.com",
+    credentials: true,
+  })
+);
+
+// app.enableCors({
+//   origin: true,
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+//   credentials: true,
+// });
 
 app.use(json());
 app.use(authRouter);
