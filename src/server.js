@@ -13,6 +13,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://ehobicho.herokuapp.com",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
   })
 );
