@@ -10,8 +10,24 @@ import checkoutRouter from "./routes/checkout.router.js"
 dotenv.config();
 
 const app = express();
-
 app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: true,
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+//     credentials: true,
+//   })
+// );
+
+app.options("*", cors());
+
+// app.enableCors({
+//   origin: true,
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+//   credentials: true,
+// });
+
 app.use(json());
 app.use(authRouter);
 app.use(adminRouter);

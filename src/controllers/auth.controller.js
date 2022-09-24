@@ -4,7 +4,17 @@ import db from "../database/db.js";
 import { StatusCodes } from "http-status-codes";
 
 async function createUser(req, res) {
-  const { name, email, password, cpf, address } = req.body;
+
+  const {
+        name, 
+        email, 
+        cpf, 
+        password, 
+        confirmPassword,
+        address,
+        cep
+    } = req.body
+
   const encryptedPassword = bcrypt.hashSync(password, 10);
 
   try {
@@ -13,7 +23,8 @@ async function createUser(req, res) {
       email: email.trim(),
       password: encryptedPassword,
       cpf: cpf.trim(),
-      address: address.trim()
+      address: address.trim(),
+      cep: cep.trim()
     });
 
     res.sendStatus(StatusCodes.CREATED);
