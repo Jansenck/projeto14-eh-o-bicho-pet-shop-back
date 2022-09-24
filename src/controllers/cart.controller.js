@@ -9,9 +9,10 @@ async function getProductsInCart(req,res){
     try {
         const user = await db.collection("sessions").findOne({token});
         const productsInCart = await db.collection("products_cart").find({userId: user._id}).toArray();
+
         return res.send(productsInCart);
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
@@ -30,7 +31,7 @@ async function deleteProductInCart(req, res){
         return res.sendStatus(StatusCodes.OK);
 
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
@@ -48,7 +49,7 @@ async function postTicketCheckout(req, res){
         return res.sendStatus(StatusCodes.OK);
 
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
