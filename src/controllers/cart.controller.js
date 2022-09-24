@@ -5,12 +5,12 @@ async function getProductsInCart(req,res){
 
     const token = await req.headers.authorization?.replace("Bearer ", "");
     if(!token) return res.sendStatus(StatusCodes.BAD_REQUEST);
-
     
     try {
         const user = await db.collection("sessions").findOne({token});
-        const productsInCart = await db.collection("products_cart").find({userId: user.userId}).toArray();
-        console.log(productsInCart)
+        console.log(user);
+        const productsInCart = await db.collection("products_cart").find({userId: user._id}).toArray();
+        console.log(productsInCart);
         return res.send(productsInCart);
     } catch (error) {
         console.log(error);
@@ -41,13 +41,12 @@ async function postTicketCheckout(req, res){
     if(!token) return res.sendStatus(StatusCodes.BAD_REQUEST);
 
     const products = req.body;
-    console.log(products);
     
     try {
         const user = await db.collection("sessions").findOne({token});
         if(!user) return res.sendStatus(StatusCodes.UNAUTHORIZED);
-        
-        await db.collection("checkout_ticket").insertMany({productId});
+
+        await db.collection("checkout_ticket").insertMany(products);
         return res.sendStatus(StatusCodes.OK);
 
     } catch (error) {
