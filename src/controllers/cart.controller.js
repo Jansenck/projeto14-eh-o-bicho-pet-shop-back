@@ -12,6 +12,7 @@ async function getProductsInCart(req,res){
         const productsInCart = await db.collection("products_cart").find({userId: user.userId}).toArray();
     
         return res.send(productsInCart);
+
     } catch (error) {
         console.log(error.message);
         return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -37,16 +38,17 @@ async function deleteProductInCart(req, res){
     }
 }
 async function postTicketCheckout(req, res){
+    
     const token = await req.headers.authorization?.replace("Bearer ", "");
     if(!token) return res.sendStatus(StatusCodes.BAD_REQUEST);
-
-    const products = req.body;
     
     try {
         const user = await db.collection("sessions").findOne({token});
         if(!user) return res.sendStatus(StatusCodes.UNAUTHORIZED);
 
-        await db.collection("checkout_ticket").insertMany(products);
+        const productsToCheckout = await db.collection("products_cart").find({userId: user.userId}).toArray();
+
+        await db.collection("checkout_ticket").insertMany(productsToCheckout);
         return res.sendStatus(StatusCodes.OK);
 
     } catch (error) {
