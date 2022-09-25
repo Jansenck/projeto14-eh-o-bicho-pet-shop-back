@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import { ObjectId } from "mongodb";
 import db from "../database/db.js";
 
 async function getProductsInCart(req,res){
@@ -7,10 +8,9 @@ async function getProductsInCart(req,res){
     if(!token) return res.sendStatus(StatusCodes.BAD_REQUEST);
     
     try {
-        const user = await db.collection("sessions").findOne({token});
-        console.log(user);
-        const productsInCart = await db.collection("products_cart").find({userId: user._id}).toArray();
-        console.log(productsInCart);
+        const user = await db.collection("sessions").findOne({token}); //await db.collection("sessions").findOne({userId: user._id})
+        const productsInCart = await db.collection("products_cart").find({userId: new ObjectId(`${user._id}`)}).toArray();
+    
         return res.send(productsInCart);
     } catch (error) {
         console.log(error);
