@@ -47,8 +47,8 @@ async function postTicketCheckout(req, res){
         if(!user) return res.sendStatus(StatusCodes.UNAUTHORIZED);
 
         const productsToCheckout = await db.collection("products_cart").find({userId: user.userId}).toArray();
-
         await db.collection("checkout_ticket").insertMany(productsToCheckout);
+
         return res.sendStatus(StatusCodes.OK);
 
     } catch (error) {
