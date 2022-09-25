@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import { ObjectId } from "mongodb";
 import db from "../database/db.js";
 
 async function getProductsInCart(req,res){
@@ -8,8 +9,8 @@ async function getProductsInCart(req,res){
     
     try {
         const user = await db.collection("sessions").findOne({token});
-        const productsInCart = await db.collection("products_cart").find({userId: user._id}).toArray();
-
+        const productsInCart = await db.collection("products_cart").find({userId: new ObjectId(`${user._id}`)}).toArray();
+    
         return res.send(productsInCart);
     } catch (error) {
         console.log(error.message);
