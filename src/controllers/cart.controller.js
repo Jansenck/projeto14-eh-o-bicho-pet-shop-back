@@ -9,7 +9,7 @@ async function getProductsInCart(req,res){
     
     try {
         const user = await db.collection("sessions").findOne({token});
-        const productsInCart = await db.collection("products_cart").find({userId: new ObjectId(`${user.userId}`)}).toArray();
+        const productsInCart = await db.collection("products_cart").find({userId: user.userId}).toArray();
     
         return res.send(productsInCart);
     } catch (error) {
